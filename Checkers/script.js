@@ -163,20 +163,15 @@ class Checkers {
     }
 
     capture(piece, capturedPiece) {
-        this.justCaptured = true
-
-        if (this.lightPieces.includes(capturedPiece)) {
-            this.lightPieces.splice(this.lightPieces.indexOf(capturedPiece), 1)
-            this.getAvailableSpaces(piece, this.lightPieces, this.darkPieces)
-        } else {
-            this.darkPieces.splice(this.darkPieces.indexOf(capturedPiece), 1)
-            this.getAvailableSpaces(piece, this.darkPieces, this.lightPieces)
-        }
-
+        if (this.lightPieces.includes(capturedPiece)) this.lightPieces.splice(this.lightPieces.indexOf(capturedPiece), 1)
+        else this.darkPieces.splice(this.darkPieces.indexOf(capturedPiece), 1)
         capturedPiece.removeAttribute('data-piece')
         capturedPiece.removeAttribute('data-crown')
         capturedPiece.removeEventListener('click', this.pieceClicked)
 
+        this.justCaptured = true   
+        if (this.lightPieces.includes(piece)) this.getAvailableSpaces(piece, this.lightPieces, this.darkPieces)
+        else this.getAvailableSpaces(piece, this.darkPieces, this.lightPieces)
         this.checkForMove(piece)    
     }
 
